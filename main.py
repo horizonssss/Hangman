@@ -23,26 +23,33 @@ def get_random_word_from_word_list():
         print(f"An error has occurred: {e}")
         return None
 
-def define_length_of_word(word):
+def define_length_of_word(word, guessed_letters):
     """
-    Defines the length of a given input word, returning underscores
-    for the length of a word with spaces in between.
+    Returns a string representing the word with underscores for unguessed letters and the actual letter for guessed ones
 
     Parameters:
-        word (str or None): The word to be processed or None.
+        word (str): The word to be guessed
+        guessed_letters (str): Letters guessed so far
 
     Returns:
-        str: Underscore and space per letter input.
+        str: A string with guessed letters revealed and underscores for the rest
     """
     # Check word is not None
     if word is None:
         return "No word provided, please provide a word."
-    # Initialise the underscores variable
-    underscores = ""
-    # Add an underscore & space for each letter in the word
-    underscores = len(word) * "_ "
+    
+    # Initialise display variable
+    display = ""
+    
+    # Check each letter against the guessed letters
+    for letter in word:
+        if letter in guessed_letters:
+            display += letter + " "  # Add the letter and a space
+        else:
+            display += "_ "  # Add an underscore and a space for unguessed letters
 
-    return underscores
+    return display
+
 
 def draw_hangman(chances):
     """
@@ -101,26 +108,87 @@ def draw_hangman(chances):
         print("| / \ ")
         print("| ")
 
-def remaining_letters(guessed_letters):
+def remaining_letters(guessed_letters = ''):
     """
-    Prints the alphabet with letters that have been guessed crossed out.
+    Returns a string of the alphabet with letters that have been guessed crossed out
 
     Parameters:
-    guessed_letters (set or list): The letters that have been guessed so far.
+        Guessed_letters (str): A string of letters that have been guessed so far. Defaults to an empty string
+
+    Returns:
+        str: A string of the alphabet with guessed letters crossed out
+
+    Raises:
+        ValueError: If guessed_letters is not a string
     """
-    if guessed_letters is None:
-        return None
+    # Validate input type
+    if not isinstance(guessed_letters, str):
+        raise ValueError("guessed_letters must be a string")
     
-    guessed_letters_before_strike = ""
-    for letter in guessed_letters:
-        if letter in string.ascii_lowercase:
-            guessed_letters_before_strike += letter + '\u0336'
-    print(guessed_letters_before_strike)
+    # Convert guessed_letters to lowercase for ascii_lowercase comparison
+    guessed_letters = guessed_letters.lower()
 
+    # Initialise the display string
+    display_letters = ""
 
+    # Build the string with guessed letters crossed out
+    for letter in string.ascii_lowercase:
+        if letter in guessed_letters:
+            display_letters += (letter + '\u0336' + " ") # Cross out guessed letter
+        else:
+            display_letters += (letter + " ") # Include other letters
+    return display_letters
+
+def start_hangman_game():
+    """
+    Initialises the game, acts as main running loop
+    """
+    # Create a random word to be guessed
+    word = get_random_word_from_word_list()
+    # Amount of chances given to player
+    chances = 7
+    # Control logic for game loop
+    won = False
+    # The string of letters guessed so far
+    guessed_letters = ""
+
+    # Loop to keep game running
+    while True:
+        # The underscores representing letters to guess or guessed already
+        word_display = define_length_of_word(word, guessed_letters)
+        
+        # Chances have been used, end the game
+        if chances == 0:
+            print(f"Sorry, you lost! The word was {word}.")
+            print("Goodbye!")
+            break
+        # Display the information to player
+        print("--- Guess the word! ---")
+        print(f"Your word: " + word_display)
+        print(f"Chances left: {chances}")
+
+        # Take the input for a character guess
+        character = input("Enter a letter that could be in the word: ")
+        # Check length of input is not over 1 and is a letter
+        if len(character) > 1 or not character.isalpha():
+            print("Please enter one character at a time")
+            continue
+        # Append the guessed character to the guessed letters string
+        else:
+            guessed_letters += character
+        # A variable to check if the letters guessed equal the word
+        guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
+        # Check word has been guessed correctly or letter guessed correctly
+        if guessed_letters_without_whitespace == word:
+            print(f"You won! The word was {word}")
+            won = True
+            break
+        elif # NOTE TO SELF, THIS IS WHERE YOU LEFT OFF <- PUT LOGIC IN TO AVOID HANGMAN DRAWN IF LETTER GUESSED CORRECTLY
+        else:
+            chances -= 1
+            draw_hangman(chances)
 
 
 
 # Testing
-print(define_length_of_word(get_random_word_from_word_list()))
-remaining_letters("abcx")
+start_hangman_game()
