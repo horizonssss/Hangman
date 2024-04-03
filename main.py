@@ -159,7 +159,7 @@ def start_hangman_game():
         
         # Chances have been used, end the game
         if chances == 0:
-            print(f"Sorry, you lost! The word was {word}.")
+            print(f"Sorry, you lost! The word was '{word}'")
             print("Goodbye!")
             break
         # Display the information to player
@@ -182,7 +182,7 @@ def start_hangman_game():
             guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
             # Check word has been guessed correctly or letter guessed correctly
             if guessed_letters_without_whitespace == word:
-                print(f"You won! The word was {word}")
+                print(f"You won! The word was '{word}'")
                 won = True
                 break
         else:
@@ -192,4 +192,10 @@ def start_hangman_game():
 
 
 # Testing
+
 start_hangman_game()
+
+# Notes, to do:
+# 1. Create loop for play again function
+# 2. Create logic for recognising letters already tried
+# 3. Create function for displaying letters already tried
