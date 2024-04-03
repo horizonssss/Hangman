@@ -151,6 +151,8 @@ def start_hangman_game():
     won = False
     # The string of letters guessed so far
     guessed_letters = ""
+    # Count the loops, for displaying correct comments at right time
+    loop_count = 0
 
     # Loop to keep game running
     while True:
@@ -160,12 +162,20 @@ def start_hangman_game():
         # Chances have been used, end the game
         if chances == 0:
             print(f"Sorry, you lost! The word was '{word}'")
-            print("Goodbye!")
             break
-        # Display the information to player
+
+        # Create variable to display the used letters so far
+        used_letters = ""
+        # Loop through guessed letters to append the new variable with better spacing
+        for letter in guessed_letters:
+            used_letters += letter + " "
+
+        # Display game information to player
         print("--- Guess the word! ---")
         print(f"Your word: " + word_display)
         print(f"Chances left: {chances}")
+        if loop_count > 0:
+            print(f"So far, you have used the following letters: {used_letters}")
 
         # Take the input for a character guess
         character = input("Enter a letter that could be in the word: ")
@@ -173,29 +183,59 @@ def start_hangman_game():
         if len(character) > 1 or not character.isalpha():
             print("Please enter one character at a time")
             continue
+        elif character in guessed_letters:
+            print("You have already used this letter, pick again!")
         # Append the guessed character to the guessed letters string
         else:
             guessed_letters += character
-        if character in word:
-            print("You guessed a letter correct!")
-            # A variable to check if the letters guessed equal the word
-            guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
-            # Check word has been guessed correctly or letter guessed correctly
-            if guessed_letters_without_whitespace == word:
-                print(f"You won! The word was '{word}'")
-                won = True
-                break
+            if character in word:
+                print("You guessed a letter correct!")
+                # A variable to check if the letters guessed equal the word
+                guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
+                # Check word has been guessed correctly or letter guessed correctly
+                if guessed_letters_without_whitespace == word:
+                    print(f"You won! The word was '{word}'")
+                    won = True
+                    break
+            else:
+                chances -= 1
+                draw_hangman(chances)
+                loop_count += 1
+        loop_count += 1
+
+
+
+def ask_to_play_again():
+    """
+    Asks the user whether they want to play again.
+    Keeps asking until a valid response ('y' or 'n') is received
+    
+    Returns:
+        bool: True if the user wants to play again, False otherwise
+    """
+    # This loop will keep running until a valid input is received
+    while True:
+        # Convert to lowercase for consistency
+        yes_or_no_to_play = input("Would you like to play again? (y/n): ").lower()
+        if yes_or_no_to_play == "y":
+            print("Great, let's play again!")
+            return True
+        elif yes_or_no_to_play == "n":
+            print("Goodbye!")
+            return False
         else:
-            chances -= 1
-            draw_hangman(chances)
+            print("Please enter only 'y' or 'n'")
 
+def main():
+    """
+    Main function to start the hangman game and handle replay logic.
+    """
+    continue_game = True
+    while continue_game:
+        # Start a new game
+        start_hangman_game()
+        # Ask if the user wants to play again and get a boolean response
+        continue_game = ask_to_play_again()
 
-
-# Testing
-
-start_hangman_game()
-
-# Notes, to do:
-# 1. Create loop for play again function
-# 2. Create logic for recognising letters already tried
-# 3. Create function for displaying letters already tried
+if __name__ == "__main__":
+    main()
