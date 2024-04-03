@@ -176,14 +176,15 @@ def start_hangman_game():
         # Append the guessed character to the guessed letters string
         else:
             guessed_letters += character
-        # A variable to check if the letters guessed equal the word
-        guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
-        # Check word has been guessed correctly or letter guessed correctly
-        if guessed_letters_without_whitespace == word:
-            print(f"You won! The word was {word}")
-            won = True
-            break
-        elif # NOTE TO SELF, THIS IS WHERE YOU LEFT OFF <- PUT LOGIC IN TO AVOID HANGMAN DRAWN IF LETTER GUESSED CORRECTLY
+        if character in word:
+            print("You guessed a letter correct!")
+            # A variable to check if the letters guessed equal the word
+            guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
+            # Check word has been guessed correctly or letter guessed correctly
+            if guessed_letters_without_whitespace == word:
+                print(f"You won! The word was {word}")
+                won = True
+                break
         else:
             chances -= 1
             draw_hangman(chances)
