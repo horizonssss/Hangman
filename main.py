@@ -1,6 +1,9 @@
 import random
 import string
 
+# Set max chances available in game
+MAX_CHANCES = 7
+
 def get_random_word_from_word_list():
     """
     Reads a list of words from a text file named 'word_list.txt', 
@@ -146,7 +149,7 @@ def start_hangman_game():
     # Create a random word to be guessed
     word = get_random_word_from_word_list()
     # Amount of chances given to player
-    chances = 7
+    chances = MAX_CHANCES
     # Control logic for game loop
     won = False
     # The string of letters guessed so far
@@ -178,7 +181,7 @@ def start_hangman_game():
             print(f"So far, you have used the following letters: {used_letters}")
 
         # Take the input for a character guess
-        character = input("Enter a letter that could be in the word: ")
+        character = input("Enter a letter that could be in the word: ").lower()
         # Check length of input is not over 1 and is a letter
         if len(character) > 1 or not character.isalpha():
             print("Please enter one character at a time")
