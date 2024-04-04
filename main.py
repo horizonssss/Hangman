@@ -16,7 +16,7 @@ def get_random_word_from_word_list():
     try:
         with open("word_list.txt", 'r') as file:
             # Strip whitespace and newlines
-            wordlist = [line.strip() for line in file.readlines()]
+            wordlist = [line.strip().lower() for line in file.readlines()]
         # Return random word from list
         return random.choice(wordlist)
     except FileNotFoundError:
@@ -56,60 +56,22 @@ def define_length_of_word(word, guessed_letters):
 
 def draw_hangman(chances):
     """
-    Prints out the hangman picture, depending on remaining chances.
+    Prints out the hangman picture, depending on remaining chances
 
     Parameters:
-        integer (int or None): The number to be processed or None.
+        integer (int): Remaining incorrect guesses, dictates the hangman's drawing stage
     """
-    if chances == 6:
-        print("________ ")
-        print("| | ")
-        print("| ")
-        print("| ")
-        print("| ")
-        print("| ")
-    elif chances == 5:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| ")
-        print("| ")
-        print("| ")
-    elif chances == 4:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| / ")
-        print("| ")
-        print("| ")
-    elif chances == 3:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| /| ")
-        print("| ")
-        print("| ")
-    elif chances == 2:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| /|\ ")
-        print("| ")
-        print("| ")
-    elif chances == 1:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| /|\ ")
-        print("| / ")
-        print("| ")
-    elif chances == 0:
-        print("________ ")
-        print("| | ")
-        print("| 0 ")
-        print("| /|\ ")
-        print("| / \ ")
-        print("| ")
+    stages = [
+        "________ \n| | \n| 0 \n| /|\\ \n| / \\ \n| ",
+        "________ \n| | \n| 0 \n| /|\\ \n| / \n| ",
+        "________ \n| | \n| 0 \n| /|\\ \n| \n| ",
+        "________ \n| | \n| 0 \n| /| \n| \n| ",
+        "________ \n| | \n| 0 \n| / \n| \n| ",
+        "________ \n| | \n| 0 \n| \n| \n| ",
+        "________ \n| | \n| \n| \n| \n| "
+    ]
+    # Adjust to show correct stage
+    print(stages [0 + chances])
 
 def remaining_letters(guessed_letters = ''):
     """
