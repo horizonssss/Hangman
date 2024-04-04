@@ -4,23 +4,18 @@ import string
 # Set max chances available in game
 MAX_CHANCES = 7
 
-def get_random_word_from_word_list():
-    """
-    Reads a list of words from a text file named 'word_list.txt', 
-    selects a random word from the list, and returns it. If the file
-    cannot be opened, prints an error message and returns None.
-    
-    Returns:
-        str: A random word from the list, or None if the file can't be read.
-    """
+def get_random_word_from_word_list(subject_file):
+
+
     try:
-        with open("word_list.txt", 'r') as file:
+        with open(subject_file, 'r') as file:
             # Strip whitespace and newlines
             wordlist = [line.strip().lower() for line in file.readlines()]
         # Return random word from list
         return random.choice(wordlist)
     except FileNotFoundError:
-        print("Error: 'word_list.txt' file not found.")
+        print(f"Error: '{subject_file}' file not found.")
+
         return None
     except Exception as e:
         print(f"An error has occurred: {e}")
@@ -108,8 +103,28 @@ def start_hangman_game():
     """
     Initialises the game, acts as main running loop
     """
-    # Create a random word to be guessed
-    word = get_random_word_from_word_list()
+    # Game start message
+    print("Welcome to Hangman")
+
+    # Offer choice for word subjects with loop to validate input
+    subject_chosen = False
+    while subject_chosen == False:
+        print("What subject would you like the word to be based on?")
+        subject = input(f"Either:\nOcean (o)\nForest(f)\nCities(c)\nSkies (s)\n").lower()
+        if subject not in ["o", "f", "c", "s"]:
+            print("Please enter a valid choice")
+        else:
+            subject_chosen = True
+    # Create a dictionary for the files
+    word_sources = {
+    'o': 'ocean_words.txt',
+    'f': 'forest_words.txt',
+    'c': 'cities_words.txt',
+    's': 'skies_words.txt',
+    }
+    # Choose random word from correct file depending on subject selection
+    word = get_random_word_from_word_list(word_sources[subject])
+
     # Amount of chances given to player
     chances = MAX_CHANCES
     # Control logic for game loop
