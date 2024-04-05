@@ -14,10 +14,12 @@ def get_random_word_from_word_list(subject_file):
         # Return random word from list
         return random.choice(wordlist)
     except FileNotFoundError:
+        print()
         print(f"Error: '{subject_file}' file not found.")
 
         return None
     except Exception as e:
+        print()
         print(f"An error has occurred: {e}")
         return None
 
@@ -66,6 +68,7 @@ def draw_hangman(chances):
         "________ \n| | \n| \n| \n| \n| "
     ]
     # Adjust to show correct stage
+    print()
     print(stages [0 + chances])
 
 def remaining_letters(guessed_letters = ''):
@@ -104,14 +107,20 @@ def start_hangman_game():
     Initialises the game, acts as main running loop
     """
     # Game start message
+    print()
     print("Welcome to Hangman")
+    print("------------------")
 
     # Offer choice for word subjects with loop to validate input
     subject_chosen = False
     while subject_chosen == False:
+        print()
         print("What subject would you like the word to be based on?")
-        subject = input(f"Either:\nOcean (o)\nForest(f)\nCities(c)\nSkies (s)\n").lower()
+        print("\nEither:\n-------\nOcean (o)\nForest(f)\nCities(c)\nSkies (s)\n")
+        subject = input("Please enter your selection: ").lower()
+
         if subject not in ["o", "f", "c", "s"]:
+            print()
             print("Please enter a valid choice")
         else:
             subject_chosen = True
@@ -141,6 +150,7 @@ def start_hangman_game():
         
         # Chances have been used, end the game
         if chances == 0:
+            print()
             print(f"Sorry, you lost! The word was '{word}'")
             break
 
@@ -151,29 +161,38 @@ def start_hangman_game():
             used_letters += letter + " "
 
         # Display game information to player
+        print("\n\n")
         print("--- Guess the word! ---")
+        print()
         print(f"Your word: " + word_display)
+        print()
         print(f"Chances left: {chances}")
         if loop_count > 0:
+            print()
             print(f"So far, you have used the following letters: {used_letters}")
 
         # Take the input for a character guess
+        print()
         character = input("Enter a letter that could be in the word: ").lower()
         # Check length of input is not over 1 and is a letter
         if len(character) > 1 or not character.isalpha():
+            print()
             print("Please enter one character at a time")
             continue
         elif character in guessed_letters:
+            print()
             print("You have already used this letter, pick again!")
         # Append the guessed character to the guessed letters string
         else:
             guessed_letters += character
             if character in word:
+                print()
                 print("You guessed a letter correct!")
                 # A variable to check if the letters guessed equal the word
                 guessed_letters_without_whitespace = define_length_of_word(word, guessed_letters).replace(" ", "")
                 # Check word has been guessed correctly or letter guessed correctly
                 if guessed_letters_without_whitespace == word:
+                    print()
                     print(f"You won! The word was '{word}'")
                     won = True
                     break
@@ -196,14 +215,18 @@ def ask_to_play_again():
     # This loop will keep running until a valid input is received
     while True:
         # Convert to lowercase for consistency
+        print()
         yes_or_no_to_play = input("Would you like to play again? (y/n): ").lower()
         if yes_or_no_to_play == "y":
+            print()
             print("Great, let's play again!")
             return True
         elif yes_or_no_to_play == "n":
+            print()
             print("Goodbye!")
             return False
         else:
+            print()
             print("Please enter only 'y' or 'n'")
 
 def main():
