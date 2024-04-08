@@ -4,6 +4,28 @@ import string
 # Set max chances available in game
 MAX_CHANCES = 7
 
+def select_difficulty():
+    """
+    Lets the player select a difficulty level which adjusts the MAX_CHANCES
+    """
+    global MAX_CHANCES
+    print("\nSelect difficulty:")
+    print("1. Easy (10 chances)")
+    print("2. Medium (7 chances)")
+    print("3. Hard (5 chances)")
+    difficulty = input("Enter your choice (1/2/3): ")
+
+    if difficulty == "1":
+        MAX_CHANCES = 10
+    elif difficulty == "2":
+        MAX_CHANCES = 7
+    elif difficulty == "3":
+        MAX_CHANCES = 5
+    else:
+        print("Invalid selection. Defaulting to Medium.")
+        MAX_CHANCES = 7
+
+
 def get_random_word_from_word_list(subject_file):
 
 
@@ -110,6 +132,9 @@ def start_hangman_game():
     print()
     print("Welcome to Hangman")
     print("------------------")
+
+    # Select and update the difficulty by changing number of chances
+    select_difficulty()
 
     # Offer choice for word subjects with loop to validate input
     subject_chosen = False
