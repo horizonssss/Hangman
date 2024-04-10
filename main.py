@@ -212,7 +212,20 @@ def start_hangman_game():
         if loop_count > 0:
             print()
             print(f"So far, you have used the following letters: {used_letters}")
-
+        
+        # Give user an option for a hint (insert random letter)
+        print("\nDo you want a hint? This will cost you one chance. (y/n): ")
+        # Input the option
+        hint_choice = input().lower()
+        if hint_choice == 'y':
+            # Make sure player has at least one chance to use a hint
+            if chances > 1:
+                hint = provide_hint(word, guessed_letters)
+                guessed_letters += hint  # Add the hinted letter to guessed letters
+                chances -= 1  # Reduce chances by one as a cost for the hint
+                print(f"Here's your hint: {hint} is in the word.")
+            else:
+                print("Not enough chances left to use a hint!")
         # Take the input for a character guess
         print()
         character = input("Enter a letter that could be in the word: ").lower()
