@@ -44,6 +44,23 @@ def get_random_word_from_word_list(subject_file):
         print()
         print(f"An error has occurred: {e}")
         return None
+    
+def provide_hint(word, guessed_letters):
+    """
+    Provides a hint by revealing an unguessed letter in the word
+    Reduces the player's chances by one as a cost for using the hint
+
+    Parameters:
+        word (str): The word to be guessed.
+        guessed_letters (str): Letters guessed so far
+
+    Returns:
+        str: A letter from the word not yet guessed
+    """
+    unguessed_letters = [letter for letter in word if letter not in guessed_letters]
+    if unguessed_letters:
+        return random.choice(unguessed_letters)
+    return ''
 
 def define_length_of_word(word, guessed_letters):
     """
