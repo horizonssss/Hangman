@@ -108,7 +108,11 @@ def draw_hangman(chances):
     ]
     # Adjust to show correct stage
     print()
-    print(stages [0 + chances])
+    STAGES_AMOUNT = 6
+    if chances <= STAGES_AMOUNT:
+        print(stages [0 + chances])
+    else:
+        print(f"\nYou are on the way to the gallows!")
 
 def remaining_letters(guessed_letters = ''):
     """
@@ -223,9 +227,13 @@ def start_hangman_game():
                 hint = provide_hint(word, guessed_letters)
                 guessed_letters += hint  # Add the hinted letter to guessed letters
                 chances -= 1  # Reduce chances by one as a cost for the hint
-                print(f"Here's your hint: {hint} is in the word.")
+                print(f"\nHere's your hint: {hint} is in the word.")
             else:
-                print("Not enough chances left to use a hint!")
+                print("\nNot enough chances left to use a hint!")
+        elif hint_choice == 'n':
+            print("\nNo hint taken.")
+        else:
+            print("No tip given, invalid entry!")
         # Take the input for a character guess
         print()
         character = input("Enter a letter that could be in the word: ").lower()
@@ -297,3 +305,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Adjust the way hangman picture is presented depending on 
+# the difficulty, it can be bettered.
