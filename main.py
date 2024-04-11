@@ -112,7 +112,7 @@ def draw_hangman(chances):
     if chances <= STAGES_AMOUNT:
         print(stages [0 + chances])
     else:
-        print(f"\nYou are on the way to the gallows!")
+        print("________ \n| | \n| \n| \n| \n| ")
 
 def remaining_letters(guessed_letters = ''):
     """
