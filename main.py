@@ -217,31 +217,38 @@ def start_hangman_game():
             print()
             print(f"So far, you have used the following letters: {used_letters}")
         
-        # Give user an option for a hint (insert random letter)
-        print("\nDo you want a hint? This will cost you one chance. (y/n): ")
-        # Input the option
-        hint_choice = input().lower()
-        if hint_choice == 'y':
-            # Make sure player has at least one chance to use a hint
-            if chances > 1:
-                hint = provide_hint(word, guessed_letters)
-                guessed_letters += hint  # Add the hinted letter to guessed letters
-                chances -= 1  # Reduce chances by one as a cost for the hint
-                print(f"\nHere's your hint: {hint} is in the word.")
-            else:
-                print("\nNot enough chances left to use a hint!")
-        elif hint_choice == 'n':
-            print("\nNo hint taken.")
-        else:
-            print("No tip given, invalid entry!")
         # Take the input for a character guess
         print()
-        character = input("Enter a letter that could be in the word: ").lower()
-        # Check length of input is not over 1 and is a letter
-        if len(character) > 1 or not character.isalpha():
+        character = input("Enter a letter that could be in the word, or press 1 for a hint: ").lower()
+
+        # Check length of input is not over 1
+        if len(character) > 1:
             print()
             print("Please enter one character at a time")
             continue
+        # Check input is letter
+        elif not character.isalpha():
+            # Check if clue has been asked for
+            if character == "1":
+                # Give user an option for a hint (insert random letter)
+                print("\nDo you want a hint? This will cost you one chance. (y/n): ")
+                # Input the option
+                hint_choice = input().lower()
+                if hint_choice == 'y':
+                    # Make sure player has at least one chance to use a hint
+                    if chances > 1:
+                        hint = provide_hint(word, guessed_letters)
+                        guessed_letters += hint  # Add the hinted letter to guessed letters
+                        chances -= 1  # Reduce chances by one as a cost for the hint
+                        print(f"\nHere's your hint: {hint} is in the word.")
+                    else:
+                        print("\nNot enough chances left to use a hint!")
+                elif hint_choice == 'n':
+                    print("\nNo hint taken.")
+                else:
+                    print("No tip given, invalid entry!")
+            else:
+                print("\nIncorrect input given!")
         elif character in guessed_letters:
             print()
             print("You have already used this letter, pick again!")
