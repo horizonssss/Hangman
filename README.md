@@ -17,7 +17,7 @@ Ensure you have Python 3.x installed on your system. You can download it from py
 
 Installation
 Clone the repository to your local machine:
-git clone https://your-repository-url-here.git
+git clone https://github.com/horizonssss/hangman.git
 Navigate to the cloned directory:
 cd hangman-game
 
