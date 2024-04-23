@@ -27,23 +27,42 @@ def select_difficulty():
 
 
 def get_random_word_from_word_list(subject_file):
+    """
+    Gets a random word from a specified text file.
 
+    This function attempts to open and read a file specified by the path 'subject_file'.
+    It reads all lines, strips whitespace and converts them to lowercase to create a
+    normalized list of words. A random word is then selected and returned
+
+    Parameters:
+    subject_file (str): The path to the file containing the word list
+
+    Returns:
+    str: A random word from the file if successful, none otherwise
+    """
 
     try:
+        # Attempt to open the specified file in read mode.
         with open(subject_file, 'r') as file:
-            # Strip whitespace and newlines
+            # Read lines from the file, strip whitespace and newline characters,
+            # and convert each line to lowercase to form the word list.
             wordlist = [line.strip().lower() for line in file.readlines()]
-        # Return random word from list
+        
+        # Select and return a random word from the word list.
         return random.choice(wordlist)
+    
     except FileNotFoundError:
+        # Print an error message if the file cannot be found and return None.
         print()
         print(f"Error: '{subject_file}' file not found.")
-
         return None
+    
     except Exception as e:
+        # Print any other errors that occur during the execution of this function and return None.
         print()
         print(f"An error has occurred: {e}")
         return None
+
     
 def provide_hint(word, guessed_letters):
     """
@@ -144,6 +163,7 @@ def remaining_letters(guessed_letters = ''):
         else:
             display_letters += (letter + " ") # Include other letters
     return display_letters
+
 
 def start_hangman_game():
     """
@@ -312,6 +332,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# Adjust the way hangman picture is presented depending on 
-# the difficulty, it can be bettered.
