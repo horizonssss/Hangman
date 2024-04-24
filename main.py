@@ -11,7 +11,32 @@ root.title("Welcome to Hangman!")
 # Set the width and height
 root.geometry("700x700")
 
+def difficulty_selection():
+    
+    # Add labels
+    difficulty_label = Label(root, text = "Select difficulty:")
+    difficulty_label.grid(column = 0, columnspan = 4)
+
+    # Add buttons
+    def clicked(option):
+        difficulty_label.configure(text = f"You are playing {option}")
+        # Hide buttons after selection
+        easy_btn.grid_forget()
+        medium_btn.grid_forget()
+        hard_btn.grid_forget()
+
+    # Button widget
+    easy_btn = Button(root, text = "Easy", fg = "blue", command = lambda: clicked("Easy"))
+    medium_btn = Button(root, text = "Medium", fg = "blue", command = lambda: clicked("Medium"))
+    hard_btn = Button(root, text = "Hard", fg = "blue", command = lambda: clicked("Hard"))
+
+    # Set button grid
+    easy_btn.grid(column = 1, row = 1)
+    medium_btn.grid(column = 2, row = 1)
+    hard_btn.grid(column = 3, row = 1)
+
 # Execute tkinter
+difficulty_selection()
 root.mainloop()
 
 # Set max chances available in game
