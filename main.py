@@ -1,5 +1,18 @@
 import random
 import string
+from tkinter import *
+
+# GUI logic
+# New root window
+root = Tk()
+
+# Root window title and dimension
+root.title("Welcome to Hangman!")
+# Set the width and height
+root.geometry("700x700")
+
+# Execute tkinter
+root.mainloop()
 
 # Set max chances available in game
 MAX_CHANCES = 7
