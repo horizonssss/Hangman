@@ -15,15 +15,15 @@ def difficulty_selection():
     
     # Add labels
     difficulty_label = Label(root, text = "Select difficulty:")
-    difficulty_label.grid(column = 0, columnspan = 4)
+    difficulty_label.grid(column = 0, columnspan = 4, sticky = "ew")
 
     # Add buttons
     def clicked(option):
         difficulty_label.configure(text = f"You are playing {option}")
         # Hide buttons after selection
-        easy_btn.grid_forget()
-        medium_btn.grid_forget()
-        hard_btn.grid_forget()
+        easy_btn.grid_remove()
+        medium_btn.grid_remove()
+        hard_btn.grid_remove()
 
     # Button widget
     easy_btn = Button(root, text = "Easy", fg = "blue", command = lambda: clicked("Easy"))
@@ -31,9 +31,14 @@ def difficulty_selection():
     hard_btn = Button(root, text = "Hard", fg = "blue", command = lambda: clicked("Hard"))
 
     # Set button grid
-    easy_btn.grid(column = 1, row = 1)
-    medium_btn.grid(column = 2, row = 1)
-    hard_btn.grid(column = 3, row = 1)
+    easy_btn.grid(column = 1, row = 1, sticky='ew')
+    medium_btn.grid(column = 2, row = 1, sticky='ew')
+    hard_btn.grid(column = 3, row = 1, sticky='ew')
+
+    # Configure columns to expand equally and center
+    root.columnconfigure(1, weight=1)
+    root.columnconfigure(2, weight=1)
+    root.columnconfigure(3, weight=1)
 
 # Execute tkinter
 difficulty_selection()
