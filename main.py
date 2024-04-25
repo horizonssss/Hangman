@@ -17,7 +17,7 @@ def select_difficulty():
     difficulty = "medium"
     # Add label
     difficulty_label = Label(root, text = "Select difficulty:")
-    difficulty_label.grid(column = 0, row=1, columnspan = 4, sticky = "ew")
+    difficulty_label.grid(column = 0, row=1, columnspan=5, sticky = "ew")
 
     # Add buttons
     def clicked(option):
@@ -48,17 +48,19 @@ def select_difficulty():
     hard_btn.grid(column = 3, row = 2, sticky='ew')
 
     # Configure columns to expand equally and center
-    root.columnconfigure(1, weight=1)
-    root.columnconfigure(2, weight=1)
-    root.columnconfigure(3, weight=1)
+    for i in range(5):
+        root.columnconfigure(i, weight=1)
+        
 
     # Return updated difficulty
     return(difficulty)
 
 def select_topic():
+    # Set default return subject
+    chosen_subject = ""
     # Create label
     subject_label = Label(root, text="What topic would you like the word based on?")
-    subject_label.grid(column=0, row=4, columnspan=4, sticky="ew")
+    subject_label.grid(column=0, row=4, columnspan=5, sticky="ew")
 
     # Control logic
     def clicked(subject):
@@ -67,6 +69,7 @@ def select_topic():
         forest_button.grid_remove()
         cities_button.grid_remove()
         skies_button.grid_remove()
+        chosen_subject = subject
 
     # Create buttons
     ocean_button = Button(root, text="Oceans", fg="Blue", command=lambda: clicked("oceans"))
@@ -75,25 +78,20 @@ def select_topic():
     skies_button = Button(root, text="Skies", fg="Blue", command=lambda: clicked("skies"))
 
     # Set button grid
-    ocean_button.grid(column=1, row=5, sticky="ew")
-    forest_button.grid(column=2, row=5, sticky="ew")
-    cities_button.grid(column=3, row=5, sticky="ew")
-    skies_button.grid(column=4, row=5, sticky="ew")
-
-    # Configure columns to expand equally and center
-    root.columnconfigure(1, weight=1)
-    root.columnconfigure(2, weight=1)
-    root.columnconfigure(3, weight=1)
-    root.columnconfigure(4, weight=1)
+    ocean_button.grid(column = 2, row = 5, sticky='ew')
+    forest_button.grid(column = 2, row = 6, sticky='ew')
+    cities_button.grid(column = 2, row = 7, sticky='ew')
+    skies_button.grid(column = 2, row = 8, sticky='ew')
+    return chosen_subject
 
 def start_hangman_game():
     # Add label
     welcome_label = Label(root, text = "Welcome to Hangman\n--------------------------------", font=("Helvetica", 18, 'bold'))
-    welcome_label.grid(column = 0, columnspan = 4,sticky = "ew")
+    welcome_label.grid(column = 0, columnspan = 5,sticky = "ew")
 
     # Use difficulty function to select difficulty
     difficulty = select_difficulty()
-    select_topic()
+    subject = select_topic()
 
 
 # Execute tkinter
