@@ -1,103 +1,49 @@
 import random
 import string
 from tkinter import *
-from tkinter import messagebox
 
 # GUI logic
 # New root window
 root = Tk()
 
 # Root window title and dimension
-root.title("Hangman Game")
+root.title("Welcome to Hangman!")
 # Set the width and height
 root.geometry("700x700")
 
 def select_difficulty():
-    # Set medium as default difficulty
-    difficulty = "medium"
+    
     # Add label
     difficulty_label = Label(root, text = "Select difficulty:")
-    difficulty_label.grid(column = 0, row=1, columnspan = 4, sticky = "ew")
+    difficulty_label.grid(column = 0, columnspan = 4, sticky = "ew")
 
     # Add buttons
     def clicked(option):
-        difficulty_label.configure(text = f"You are playing {option} mode")
+        difficulty_label.configure(text = f"You are playing {option}")
         # Hide buttons after selection
         easy_btn.grid_remove()
         medium_btn.grid_remove()
         hard_btn.grid_remove()
-        # Set game difficulty
-        if option == "easy":
-            difficulty = "easy"
-        elif option == "medium":
-            difficulty = "medium"
-        elif option == "hard":
-            difficulty = "hard"
-        else:
-            messagebox.show_warning("Warning, an error occured!\nDefaulted to medium difficulty.")
-            difficulty = "medium"
 
     # Button widget
-    easy_btn = Button(root, text = "Easy", fg = "blue", command = lambda: clicked("easy"))
-    medium_btn = Button(root, text = "Medium", fg = "blue", command = lambda: clicked("medium"))
-    hard_btn = Button(root, text = "Hard", fg = "blue", command = lambda: clicked("hard"))
+    easy_btn = Button(root, text = "Easy", fg = "blue", command = lambda: clicked("Easy"))
+    medium_btn = Button(root, text = "Medium", fg = "blue", command = lambda: clicked("Medium"))
+    hard_btn = Button(root, text = "Hard", fg = "blue", command = lambda: clicked("Hard"))
 
     # Set button grid
-    easy_btn.grid(column = 1, row = 2, sticky='ew')
-    medium_btn.grid(column = 2, row = 2, sticky='ew')
-    hard_btn.grid(column = 3, row = 2, sticky='ew')
+    easy_btn.grid(column = 1, row = 1, sticky='ew')
+    medium_btn.grid(column = 2, row = 1, sticky='ew')
+    hard_btn.grid(column = 3, row = 1, sticky='ew')
 
     # Configure columns to expand equally and center
     root.columnconfigure(1, weight=1)
     root.columnconfigure(2, weight=1)
     root.columnconfigure(3, weight=1)
 
-    # Return updated difficulty
-    return(difficulty)
-
-def select_topic():
-    # Create label
-    subject_label = Label(root, text="What topic would you like the word based on?")
-    subject_label.grid(column=0, row=4, columnspan=4, sticky="ew")
-
-    # Control logic
-    def clicked(subject):
-        subject_label.configure(text=f"Your word has something to do with {subject}")
-        ocean_button.grid_remove()
-        forest_button.grid_remove()
-        cities_button.grid_remove()
-        skies_button.grid_remove()
-
-    # Create buttons
-    ocean_button = Button(root, text="Oceans", fg="Blue", command=lambda: clicked("oceans"))
-    forest_button = Button(root, text="Forests", fg="Blue", command=lambda: clicked("forests"))
-    cities_button = Button(root, text="Cities", fg="Blue", command=lambda: clicked("cities"))
-    skies_button = Button(root, text="Skies", fg="Blue", command=lambda: clicked("skies"))
-
-    # Set button grid
-    ocean_button.grid(column=1, row=5, sticky="ew")
-    forest_button.grid(column=2, row=5, sticky="ew")
-    cities_button.grid(column=3, row=5, sticky="ew")
-    skies_button.grid(column=4, row=5, sticky="ew")
-
-    # Configure columns to expand equally and center
-    root.columnconfigure(1, weight=1)
-    root.columnconfigure(2, weight=1)
-    root.columnconfigure(3, weight=1)
-    root.columnconfigure(4, weight=1)
-
-def start_hangman_game():
-    # Add label
-    welcome_label = Label(root, text = "Welcome to Hangman\n--------------------------------", font=("Helvetica", 18, 'bold'))
-    welcome_label.grid(column = 0, columnspan = 4,sticky = "ew")
-
-    # Use difficulty function to select difficulty
-    difficulty = select_difficulty()
-    select_topic()
 
 
 # Execute tkinter
-start_hangman_game()
+select_difficulty()
 root.mainloop()
 
 # Set max chances available in game
